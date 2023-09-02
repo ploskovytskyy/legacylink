@@ -4,7 +4,7 @@ export function H1({ children, className }: PropsWithChildrenAndClassName) {
   return (
     <h2
       className={cn(
-        "scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl",
+        "scroll-m-20 text-3xl font-bold tracking-tight lg:text-4xl",
         className
       )}
     >

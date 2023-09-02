@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { FileEdit, Mail, PenSquare, Plus, Trash2 } from "lucide-react";
+import { FileEdit, PenSquare, Plus, Trash2 } from "lucide-react";
 
 const Letters = () => {
   return (
     <div className="grid gap-5">
       <LetterCard id="1" name="Eth wallets" />
-      <LetterCard id="1" name="Other wallets" />
+      <LetterCard
+        id="1"
+        name="Other wallets Other wallets Other wallets Other wallets Other wallets Other wallets"
+      />
       <LetterCard id="1" name="Social media passwords" />
       <LetterCard id="1" name="Other passwords" />
 
@@ -34,10 +37,10 @@ const LetterCard = ({ id, name }: { id: string; name: string }) => {
   };
 
   return (
-    <div className="glass-bg p-6 rounded-xl flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <PenSquare className="w-6" />
-        <span className="text-lg leading-snug">{name}</span>
+    <div className="glass-bg px-3 lg:px-6 py-3 lg:py-4 rounded-xl flex items-center justify-between">
+      <div className="flex items-center gap-3 max-w-sm">
+        <PenSquare className="w-4 lg:w-5 flex-shrink-0" />
+        <span className="leading-snug line-clamp-1">{name}</span>
       </div>
       <div className="flex gap-2">
         <Button

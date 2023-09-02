@@ -1,22 +1,12 @@
-import { H1 } from "@/components/typography";
-
-import MyInfoForm from "./my-info-form";
-
-import Letters from "./letters";
+import Logo from "@/components/logo";
 
 export default function Home() {
   return (
-    <main className="container pt-16 grid lg:grid-cols-2 gap-16">
-      <div className="">
-        <div className="flex justify-between items-center mb-10">
-          <H1>My letters</H1>
-        </div>
-        <Letters />
-      </div>
-      <div className="">
-        <H1 className="mb-10">My info</H1>
-        <MyInfoForm />
-      </div>
+    <main className="container grid h-screen items-center justify-center">
+      <h1 className="text-[12vw] font-medium flex items-center">
+        <Logo className="w-[9vw] mr-[1.5vw]" />
+        LegacyLink
+      </h1>
     </main>
   );
 }

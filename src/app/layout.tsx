@@ -1,15 +1,18 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
-  title: "MyLegacy",
-  description: "MyLegacy description",
+  title: "LegacyLink",
+  description: "LegacyLink description",
 };
 
 export default function RootLayout({
@@ -22,7 +25,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "bg-gradient-to-r from-rose-100/40 to-teal-100/40 dark:from-rose-100/0 dark:to-teal-100/0"
+          "bg-gradient-to-r from-rose-100/40 to-teal-100/40 dark:from-rose-100/[.025] dark:to-teal-100/[.025]"
         )}
       >
         <Providers attribute="class" defaultTheme="system" enableSystem>

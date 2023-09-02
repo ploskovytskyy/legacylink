@@ -76,5 +76,5 @@
 }
 
 .glass-bg {
-  @apply bg-white/50 hover:bg-white/100 focus-within:bg-white/100 dark:bg-white/5 dark:hover:bg-white/[.08] dark:focus-within:bg-white/[.08] backdrop-blur-xl shadow-md shadow-black/[0.025] transition-colors;
+  @apply bg-white/70 hover:bg-white/100 focus-within:bg-white/100 dark:bg-white/5 dark:hover:bg-white/[.08] dark:focus-within:bg-white/[.08] backdrop-blur-xl shadow-md shadow-black/[0.025] transition-colors;
 }

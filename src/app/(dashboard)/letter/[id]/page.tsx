@@ -77,10 +77,10 @@ export default function Page({ params }: { params: { id: string } }) {
   const receivers = form.watch("receivers") || [];
 
   return (
-    <main className="container pt-16">
+    <main className="container py-28 lg:py-32 lg:px-9">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-          <div className="flex justify-between mb-8">
+          <div className="flex justify-between mb-5 lg:mb-8">
             <H1 className="">
               {isCreateMode ? "Create letter" : "Edit letter"}
             </H1>
