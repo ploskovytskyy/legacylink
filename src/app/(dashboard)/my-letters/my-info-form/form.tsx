@@ -60,7 +60,7 @@ export const InfoForm = ({ defaultValues, isNoUser }: Props) => {
         className="grid gap-4 glass-bg p-6 rounded-xl"
       >
         {isNoUser ? (
-          <div className="grid gap-1 p-6 rounded-xl border-2 border-dashed border-destructive">
+          <div className="grid gap-1 p-6 rounded-xl border-2 border-dashed border-destructive text-sm">
             <p>
               Save your contact information so we can reach you in case someone
               reports your death.

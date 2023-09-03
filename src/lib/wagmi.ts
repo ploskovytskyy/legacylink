@@ -1,7 +1,7 @@
 import { configureChains, createConfig } from "wagmi";
 
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+// import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
 import { publicProvider } from "wagmi/providers/public";
 import { mantle } from "./mantle-chain";

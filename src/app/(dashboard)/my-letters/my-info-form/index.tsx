@@ -7,6 +7,8 @@ import { FormSchema, InfoForm } from "./form";
 const MyInfoForm = () => {
   const { address } = useAccount();
 
+  // console.log(address);
+
   const { data: myInfo, isLoading } = useMyInfo({
     address,
   });

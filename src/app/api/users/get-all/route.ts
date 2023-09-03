@@ -5,5 +5,5 @@ export const runtime = "edge";
 
 export const GET = async () => {
   const users = await db.query.users.findMany();
-  return NextResponse.json({ users });
+  return NextResponse.json(users);
 };

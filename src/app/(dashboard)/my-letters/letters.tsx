@@ -4,8 +4,20 @@ import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { FileEdit, PenSquare, Plus, Trash2 } from "lucide-react";
+// import { useMyLetters } from "./use-my-letters";
+import { useAccount } from "wagmi";
+import { useRouter } from "next/navigation";
 
 const Letters = () => {
+  const { isConnected } = useAccount();
+  const router = useRouter();
+
+  if (!isConnected) {
+    router.push("/");
+  }
+
+  // const { data: letters } = useMyLetters();
+
   return (
     <div className="grid gap-5">
       <div className="glass-bg grid justify-center items-center p-8 rounded-xl h-[400px]">

@@ -4,11 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Maximize } from "lucide-react";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { H3, P } from "@/components/typography";
+import { H3 } from "@/components/typography";
 import { letterData } from "./letter-data";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAccount } from "wagmi";
+import { useRouter } from "next/navigation";
 
 const Letters = () => {
+  const { isConnected } = useAccount();
+  const router = useRouter();
+
+  if (!isConnected) {
+    router.push("/");
+  }
   return (
     <div className="grid gap-5">
       <LetterCard id="1" name="Eth wallet and passwords" from="Sender Name" />
