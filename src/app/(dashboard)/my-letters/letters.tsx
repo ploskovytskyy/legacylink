@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { FileEdit, PenSquare, Plus, Trash2 } from "lucide-react";
-// import { useMyLetters } from "./use-my-letters";
+import { useMyLetters } from "./use-my-letters";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
+import useDeleteLetter from "./use-delete-letter";
 
 const Letters = () => {
   const { isConnected } = useAccount();
@@ -16,42 +17,50 @@ const Letters = () => {
     router.push("/");
   }
 
-  // const { data: letters } = useMyLetters();
+  const { data, isLoading } = useMyLetters();
+
+  if (isLoading) return <div>Loading...</div>;
+
+  console.log(data);
 
   return (
     <div className="grid gap-5">
-      <div className="glass-bg grid justify-center items-center p-8 rounded-xl h-[400px]">
-        <div className="text-center">
-          <p className="text-2xl font-bold mb-5">{`You don't have any letters yet`}</p>
-          <Button className="gap-2 justify-self-center" asChild>
+      {data?.length ? (
+        <>
+          {data.map(({ id, name }, index) => (
+            <LetterCard key={index} id={id} name={name} />
+          ))}
+          <Button className="gap-2 justify-self-start" asChild>
             <Link href="/letter/create">
               <Plus className="w-4" />
               Create new
             </Link>
           </Button>
+        </>
+      ) : (
+        <div className="glass-bg grid justify-center items-center p-8 rounded-xl h-[400px]">
+          <div className="text-center">
+            <p className="text-2xl font-bold mb-5">{`You don't have any letters yet`}</p>
+            <Button className="gap-2 justify-self-center" asChild>
+              <Link href="/letter/create">
+                <Plus className="w-4" />
+                Create new
+              </Link>
+            </Button>
+          </div>
         </div>
-      </div>
-      {/* <LetterCard id="1" name="My ETH wallets" />
-      <LetterCard id="1" name="Public social media accounts" />
-      <LetterCard id="1" name="Metamask credentials" />
-      <LetterCard id="1" name="Just a letter" />
-      <Button className="gap-2 justify-self-start" asChild>
-        <Link href="/letter/create">
-          <Plus className="w-4" />
-          Create new
-        </Link>
-      </Button> */}
+      )}
     </div>
   );
 };
 
-const LetterCard = ({ id, name }: { id: string; name: string }) => {
+const LetterCard = ({ id, name }: { id: bigint; name: string }) => {
   const { toast } = useToast();
+  const { write, isLoading } = useDeleteLetter();
 
   const handleDelete = () => {
-    toast({
-      title: "Deleted",
-      description: "Your letter has been deleted",
+    write({
+      args: [id],
     });
   };
 
@@ -67,12 +76,13 @@ const LetterCard = ({ id, name }: { id: string; name: string }) => {
           size="sm"
           className="gap-2"
           variant="ghost-destructive"
+          disabled={isLoading}
         >
           <Trash2 className="w-4" />
           Delete
         </Button>
         <Button size="sm" className="gap-2" variant="ghost" asChild>
-          <Link href={`/letter/${id}`}>
+          <Link href={`/letter/${id.toString()}`}>
             <FileEdit className="w-4" />
             Edit
           </Link>

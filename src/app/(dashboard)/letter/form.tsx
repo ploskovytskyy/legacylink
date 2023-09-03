@@ -19,10 +19,10 @@ import { H1, H3 } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { Loader2, Plus, Save, Trash2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
 import { useCreateLetter } from "./create/use-create-letter";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
+import { useUpdateLetter } from "./[id]/use-update-letter";
 
 const emptyWallet = {
   address: "",
@@ -54,7 +54,13 @@ const formSchema = z.object({
 
 export type Letter = z.infer<typeof formSchema>;
 
-const LetterForm = ({ isCreateMode }: { isCreateMode?: boolean }) => {
+type Props = {
+  isCreateMode?: boolean;
+  defaultValues?: any;
+  id?: bigint;
+};
+
+const LetterForm = ({ id, isCreateMode, defaultValues }: Props) => {
   const { isConnected } = useAccount();
   const router = useRouter();
 
@@ -63,10 +69,11 @@ const LetterForm = ({ isCreateMode }: { isCreateMode?: boolean }) => {
   }
 
   const { create, isLoading } = useCreateLetter();
+  const { update, isLoading: isUpdating } = useUpdateLetter();
 
   const form = useForm<Letter>({
     resolver: zodResolver<any>(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       name: "",
       text: "",
       wallets: [],
@@ -76,7 +83,16 @@ const LetterForm = ({ isCreateMode }: { isCreateMode?: boolean }) => {
   });
 
   function onSubmit(values: Letter) {
-    create(values);
+    if (isCreateMode) {
+      create(values);
+      return;
+    }
+
+    id &&
+      update({
+        id,
+        payload: values,
+      });
   }
 
   const wallets = form.watch("wallets") || [];
@@ -88,8 +104,12 @@ const LetterForm = ({ isCreateMode }: { isCreateMode?: boolean }) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
         <div className="flex justify-between mb-5 lg:mb-8">
           <H1 className="">{isCreateMode ? "Create letter" : "Edit letter"}</H1>
-          <Button disabled={isLoading} type="submit" className="gap-2">
-            {isLoading ? (
+          <Button
+            disabled={isLoading || isUpdating}
+            type="submit"
+            className="gap-2"
+          >
+            {isLoading || isUpdating ? (
               <Loader2 className="w-4 animate-spin" />
             ) : (
               <Save className="w-4" />
@@ -334,11 +354,11 @@ const LetterForm = ({ isCreateMode }: { isCreateMode?: boolean }) => {
           </div>
         </div>
         <Button
-          disabled={isLoading}
+          disabled={isLoading || isUpdating}
           type="submit"
           className="gap-2 mt-10 justify-self-start"
         >
-          {isLoading ? (
+          {isLoading || isUpdating ? (
             <Loader2 className="w-4 animate-spin" />
           ) : (
             <Save className="w-4" />

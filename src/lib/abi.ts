@@ -1,5 +1,29 @@
 export const abi = [
   {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
     inputs: [
       {
         internalType: "string",
@@ -56,28 +80,129 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
+        internalType: "uint256",
+        name: "letterId",
+        type: "uint256",
       },
+    ],
+    name: "getLetter",
+    outputs: [
       {
-        indexed: true,
+        components: [
+          {
+            internalType: "string",
+            name: "payload",
+            type: "string",
+          },
+          {
+            internalType: "address[]",
+            name: "receivers",
+            type: "address[]",
+          },
+          {
+            internalType: "address",
+            name: "creator",
+            type: "address",
+          },
+        ],
+        internalType: "struct LegacyLink.Letter",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "letterId",
+        type: "uint256",
+      },
+    ],
+    name: "getLetterPayload",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "letterId",
+        type: "uint256",
+      },
+    ],
+    name: "getLetterReceivers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
-        name: "newOwner",
+        name: "user",
         type: "address",
       },
     ],
-    name: "OwnershipTransferred",
-    type: "event",
+    name: "getLetters",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "getReceivedLetters",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
@@ -133,93 +258,6 @@ export const abi = [
     name: "updateLetter",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "letterId",
-        type: "uint256",
-      },
-    ],
-    name: "getLetter",
-    outputs: [
-      {
-        components: [
-          {
-            internalType: "string",
-            name: "payload",
-            type: "string",
-          },
-          {
-            internalType: "address[]",
-            name: "receivers",
-            type: "address[]",
-          },
-          {
-            internalType: "address",
-            name: "creator",
-            type: "address",
-          },
-        ],
-        internalType: "struct LegacyLink.Letter",
-        name: "",
-        type: "tuple",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-    ],
-    name: "getLetters",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-    ],
-    name: "getReceivedLetters",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
 ];

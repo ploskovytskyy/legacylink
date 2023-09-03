@@ -8,6 +8,8 @@ export function isValidJson(str: string) {
   try {
     JSON.parse(str);
   } catch (e) {
+    console.log(str);
+
     return false;
   }
   return true;

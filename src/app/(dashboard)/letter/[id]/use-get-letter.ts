@@ -4,13 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useAccount, useContractRead } from "wagmi";
 import { Letter } from "../form";
 import { isValidJson } from "@/lib/utils";
-import { notFound } from "next/navigation";
 
-type LetterResponse = {
-  creator: string;
-  payload: string;
-  receivers: string[];
-};
+type PayloadResponse = string;
 
 export const useGetLetter = (letterId: string) => {
   const { address: user } = useAccount();
@@ -18,35 +13,32 @@ export const useGetLetter = (letterId: string) => {
   const id = BigInt(letterId);
 
   const contractQuery = useContractRead({
-    enabled: false,
+    enabled: !!user,
     abi: abi,
     address: contract,
-    functionName: "getLetter",
+    functionName: "getLetterPayload",
     args: [id],
     chainId: 5001,
+    cacheTime: 0,
   });
 
-  const letter = contractQuery.data as LetterResponse | undefined;
-  const isValid = isValidJson(letter?.payload || "");
+  const letter = contractQuery.data as PayloadResponse;
 
-  const shouldProceed = letter && letter.creator === user && isValid;
-
-  if (!shouldProceed) {
-    notFound();
-  }
+  const shouldProceed = !contractQuery.isLoading && isValidJson(letter);
 
   const decodeQuery = useQuery<Letter>({
     enabled: shouldProceed,
-    queryKey: ["letter", letterId],
+    queryKey: ["letters", letterId],
     queryFn: () =>
-      fetch(`/api/letter/decode`, {
-        method: "GET",
-        body: letter?.payload,
-      }).then((res) => res.json()),
+      fetch(`/api/letter/decrypt?payload=${letter}`).then((res) => res.json()),
+    cacheTime: 0,
   });
 
   return {
     isLoading: contractQuery.isLoading || decodeQuery.isLoading,
-    data: decodeQuery.data,
+    data: {
+      id,
+      data: decodeQuery.data,
+    },
   };
 };
