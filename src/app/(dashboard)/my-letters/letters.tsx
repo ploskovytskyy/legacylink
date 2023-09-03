@@ -21,8 +21,6 @@ const Letters = () => {
 
   if (isLoading) return <div>Loading...</div>;
 
-  console.log(data);
-
   return (
     <div className="grid gap-5">
       {data?.length ? (

@@ -17,7 +17,7 @@ export const useMyLetters = () => {
     cacheTime: 0,
   });
 
-  const letters = (data as bigint[]).filter((id) => id !== 0n);
+  const letters = ((data as bigint[]) || []).filter((id) => id !== 0n);
 
   const { data: payloads, isLoading: isPayloadsLoading } = useContractReads({
     enabled: !!letters?.length,
