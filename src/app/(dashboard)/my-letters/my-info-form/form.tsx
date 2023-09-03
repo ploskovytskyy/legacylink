@@ -14,48 +14,62 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
+import { useSetMyInfo } from "../use-set-my-info";
+import { Loader2, Save } from "lucide-react";
 
 const formSchema = z.object({
+  id: z.number().optional(),
   fullName: z.string().min(1, { message: "Full name is required" }).max(100),
   email: z
     .string()
     .min(1, { message: "Email is required" })
     .email("This is not a valid email."),
+  wallet: z.string(),
 });
 
-type FormSchema = z.infer<typeof formSchema>;
+export type FormSchema = z.infer<typeof formSchema>;
 
-const MyInfoForm = () => {
+type Props = {
+  isNoUser: boolean;
+  defaultValues: FormSchema;
+};
+
+export const InfoForm = ({ defaultValues, isNoUser }: Props) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver<any>(formSchema),
-    defaultValues: {
-      fullName: "",
-      email: "",
-    },
+    defaultValues,
   });
 
+  const { mutate: setMyInfo, isLoading: isSettingMyInfo } = useSetMyInfo();
+
   function onSubmit(values: FormSchema) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    setMyInfo(
+      isNoUser
+        ? values
+        : {
+            ...values,
+            id: defaultValues.id,
+          }
+    );
   }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, (error) => console.log(error))}
         className="grid gap-4 glass-bg p-6 rounded-xl"
       >
-        <div className="grid gap-1 p-6 rounded-xl border-2 border-dashed border-destructive">
-          <p>
-            Save your contact information so we can reach you in case someone
-            reports your death.
-          </p>
-          <p className="font-semibold">
-            {`Without this information we won't be able to find you.`}
-          </p>
-        </div>
+        {isNoUser ? (
+          <div className="grid gap-1 p-6 rounded-xl border-2 border-dashed border-destructive">
+            <p>
+              Save your contact information so we can reach you in case someone
+              reports your death.
+            </p>
+            <p className="font-semibold">
+              {`Without this information we won't be able to find you.`}
+            </p>
+          </div>
+        ) : null}
         <FormField
           control={form.control}
           name="fullName"
@@ -82,13 +96,15 @@ const MyInfoForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="mt-2 gap-2">
-          <Save className="w-4" />
+        <Button disabled={isSettingMyInfo} type="submit" className="mt-2 gap-2">
+          {isSettingMyInfo ? (
+            <Loader2 className="w-4 animate-spin" />
+          ) : (
+            <Save className="w-4" />
+          )}
           Save
         </Button>
       </form>
     </Form>
   );
 };
-
-export default MyInfoForm;

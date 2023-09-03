@@ -10,7 +10,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     <>
       <header className="z-50 fixed top-4 w-full">
         <div className="container px-2 lg:px-4">
-          <div className="flex justify-between py-3 pr-2 pl-4 lg:px-6 rounded-xl bg-white/50 dark:bg-white/5 backdrop-blur-xl shadow-md shadow-black/[0.025]">
+          <div className="flex justify-between py-3 pr-2 pl-4 lg:px-6 rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur-xl shadow-md shadow-black/[0.025]">
             <div className="self-center flex items-center">
               <Link
                 href="/"

@@ -13,4 +13,11 @@ export const mantle = {
     public: { http: ["https://rpc.testnet.mantle.xyz"] },
     default: { http: ["https://rpc.testnet.mantle.xyz"] },
   },
+  blockExplorers: {
+    default: {
+      name: "Mantle Testnet Explorer",
+      url: "https://explorer.testnet.mantle.xyz",
+    },
+  },
+  testnet: true,
 } as const satisfies Chain;

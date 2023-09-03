@@ -8,20 +8,27 @@ import { FileEdit, PenSquare, Plus, Trash2 } from "lucide-react";
 const Letters = () => {
   return (
     <div className="grid gap-5">
-      <LetterCard id="1" name="Eth wallets" />
-      <LetterCard
-        id="1"
-        name="Other wallets Other wallets Other wallets Other wallets Other wallets Other wallets"
-      />
-      <LetterCard id="1" name="Social media passwords" />
-      <LetterCard id="1" name="Other passwords" />
-
+      <div className="glass-bg grid justify-center items-center p-8 rounded-xl h-[400px]">
+        <div className="text-center">
+          <p className="text-2xl font-bold mb-5">{`You don't have any letters yet`}</p>
+          <Button className="gap-2 justify-self-center" asChild>
+            <Link href="/letter/create">
+              <Plus className="w-4" />
+              Create new
+            </Link>
+          </Button>
+        </div>
+      </div>
+      {/* <LetterCard id="1" name="My ETH wallets" />
+      <LetterCard id="1" name="Public social media accounts" />
+      <LetterCard id="1" name="Metamask credentials" />
+      <LetterCard id="1" name="Just a letter" />
       <Button className="gap-2 justify-self-start" asChild>
         <Link href="/letter/create">
           <Plus className="w-4" />
           Create new
         </Link>
-      </Button>
+      </Button> */}
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import Logo from "@/components/logo";
 
+export const runtime = "edge";
+
 export default function Home() {
   return (
     <main className="container grid h-screen items-center justify-center">
